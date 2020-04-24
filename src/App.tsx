@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 
-import {Home} from "./components";
+import { Home } from './components';
 
-export default () => {
-  return <Home name={"RamAsh"} />;
-};
+export default function App(): React.ReactElement {
+  return <Home name={'RamAsh'} />;
+}
