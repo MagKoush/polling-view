@@ -3,27 +3,27 @@
   "extends": [
     "prettier",
     "eslint:recommended",
+    "plugin:react/recommended",
     "eslint-config-prettier",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:import/typescript"
   ],
-  "parserOptions": {
-    "ecmaVersion": 2019,
-    "sourceType": "module"
-  },
   "globals": {
-    "process": true,
+    "React": true,
+    "document": true,
     "console": true
   },
-  "plugins": [
-    "@typescript-eslint/eslint-plugin",
-    "simple-import-sort",
-    "sort-keys-fix"
-  ],
+  "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "sort-keys-fix"],
   "rules": {
     "prettier/prettier": "error",
     "sort-keys-fix/sort-keys-fix": "error",
     "simple-import-sort/sort": "error"
+  },
+  "settings": {
+    "react": {
+      // recommended by react plugin
+      "version": "detect"
+    }
   }
 }
