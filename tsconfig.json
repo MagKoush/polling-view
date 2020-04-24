@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "jsx": "react",
+    "strict": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["webpack.config.ts", "src/index.tsx"],
+  "exclude": ["node_modules", ".vscode", "types"]
+}
