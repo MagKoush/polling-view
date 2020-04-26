@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Link from 'redux-first-router-link';
 
-import components from './components';
+import components from '..';
 
 interface Props {
   page?: string;

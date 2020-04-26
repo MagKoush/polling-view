@@ -5,6 +5,7 @@ import * as webpack from 'webpack';
 
 export const config: webpack.Configuration = {
   devServer: {
+    historyApiFallback: true,
     compress: true,
     contentBase: path.join(__dirname, 'src'),
     hot: true,
@@ -32,14 +33,7 @@ export const config: webpack.Configuration = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          'style-loader',
-          // Translates CSS into CommonJS
-          'css-loader',
-          // Compiles Sass to CSS
-          'sass-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
