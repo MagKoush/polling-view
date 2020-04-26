@@ -16,6 +16,7 @@
   },
   "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "sort-keys-fix"],
   "rules": {
+    "@typescript-eslint/no-explicit-any": 0,
     "prettier/prettier": "error",
     "sort-keys-fix/sort-keys-fix": "error",
     "simple-import-sort/sort": "error"

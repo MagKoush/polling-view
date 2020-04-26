@@ -1,9 +1,15 @@
-import * as React from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import Link from 'redux-first-router-link';
 
-export interface Props {
-  name: string;
+export function Home(): React.ReactElement {
+  return (
+    <div>
+      <h1>Hello</h1>
+      <Link to={{ type: 'SIGN_IN' }}>Sign In!</Link>
+      <Link to={{ type: 'SIGN_UP' }}>Sign Up!</Link>
+    </div>
+  );
 }
 
-export default function Hello(props: Props): React.ReactElement {
-  return <h1>Hello from {props.name}!</h1>;
-}
+export default connect()(Home);

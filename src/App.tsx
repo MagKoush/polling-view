@@ -1,7 +1,17 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
-import { Home } from './components';
+import components from './components';
 
-export default function App(): React.ReactElement {
-  return <Home name={'RamAsh'} />;
+interface Props {
+  page?: string;
 }
+
+export function App({ page = 'Home' }: Props): React.ReactElement {
+  const Component = components[page];
+  return <Component />;
+}
+
+const mapStateToProps = (props: Props): any => props;
+
+export default connect(mapStateToProps)(App);
