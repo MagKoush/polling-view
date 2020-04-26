@@ -1,50 +1,61 @@
-import path from "path";
-import {CleanWebpackPlugin} from "clean-webpack-plugin";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import * as webpack from "webpack";
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path from 'path';
+import * as webpack from 'webpack';
 
 export const config: webpack.Configuration = {
-  mode: "development",
-  entry: path.resolve(__dirname, "src/index.tsx"),
-  devtool: "source-map",
+  devServer: {
+    compress: true,
+    contentBase: path.join(__dirname, 'src'),
+    hot: true,
+    open: true,
+    port: 1234,
+  },
+  devtool: 'source-map',
+  entry: path.resolve(__dirname, 'src/index.tsx'),
+  mode: 'development',
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
         exclude: /node_modules/,
+        test: /\.ts(x?)$/,
         use: [
           {
-            loader: "ts-loader",
+            loader: 'ts-loader',
           },
         ],
       },
       {
-        enforce: "pre",
+        enforce: 'pre',
+        loader: 'source-map-loader',
         test: /\.js$/,
-        loader: "source-map-loader",
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
       },
     ],
   },
-  resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "Polling Application",
-      template: path.join(__dirname, "src/index.html"),
+      template: path.join(__dirname, 'src/index.html'),
+      title: 'Polling Application',
     }),
   ],
-  devServer: {
-    contentBase: path.join(__dirname, "src"),
-    compress: true,
-    port: 1234,
-    hot: true,
-    open: true,
-  },
-  output: {
-    filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist"),
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.scss'],
   },
 };
 

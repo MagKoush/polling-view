@@ -10,6 +10,7 @@
     "plugin:import/typescript"
   ],
   "globals": {
+    "__dirname": true,
     "React": true,
     "document": true,
     "console": true
