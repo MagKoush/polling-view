@@ -1,25 +1,69 @@
 import './styles';
 
+import * as EmailValidator from 'email-validator';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 
-export function SignIn(): React.ReactElement {
+import { setEmail } from '../../actions';
+
+interface Props {
+  goToPage: Function;
+  setUserEmail: Function;
+}
+
+export function SignIn({ goToPage, setUserEmail }: Props): React.ReactElement {
+  const { register, handleSubmit, errors } = useForm({
+    mode: 'onChange',
+  });
+
+  const onSubmit = ({ email }: any): void => {
+    goToPage('ELECTION');
+    setUserEmail(email);
+  };
+
+  const diaplayInputErrorMessage = (): string => {
+    let errMsg = '';
+
+    if (errors.email) {
+      switch (errors.email.type) {
+        case 'required':
+          errMsg = 'Email is required';
+          break;
+        case 'valid':
+          errMsg = 'Email is not valid';
+          break;
+      }
+    }
+
+    return errMsg;
+  };
+
   return (
     <div className="signin">
       <h1>Login</h1>
-      <form className="form">
-        <label>
-          Username:
-          <input type="text" name="username" />
-        </label>
-        <label>
-          Password:
-          <input type="text" name="password" />
-        </label>
-        <input type="submit" value="Submit" />
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email Address"
+          ref={register({
+            required: true,
+            validate: { valid: (value): any => EmailValidator.validate(value) },
+          })}
+        />
+        {diaplayInputErrorMessage()}
+        <input type="submit" value="Login" />
       </form>
     </div>
   );
 }
 
-export default connect()(SignIn);
+const mapDispatch = (dispatch: Function): any => ({
+  goToPage: (type: string): any => dispatch({ type }),
+  setUserEmail: (email: string): any => dispatch(setEmail(email)),
+});
+
+const mapState = (props: any): any => props;
+
+export default connect(mapState, mapDispatch)(SignIn);

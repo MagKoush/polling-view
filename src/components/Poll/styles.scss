@@ -1,0 +1,9 @@
+.poll {
+  & .choices {
+    display: flex;
+    padding-left: 0.5rem;
+    & > label {
+      padding-right: 0.5rem;
+    }
+  }
+}

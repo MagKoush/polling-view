@@ -1,6 +1,7 @@
 import { NOT_FOUND } from 'redux-first-router';
 
 export const Components = {
+  ELECTION: 'Election',
   HOME: 'Home',
   [NOT_FOUND]: 'NotFound',
   SIGN_IN: 'SignIn',
@@ -8,6 +9,7 @@ export const Components = {
 };
 
 export default {
+  ELECTION: '/election',
   HOME: '/',
   SIGN_IN: '/signin',
   SIGN_UP: '/singup',

@@ -9,7 +9,6 @@ export function Home(): React.ReactElement {
     <div className="home">
       <h1>Home</h1>
       <Link to={{ type: 'SIGN_IN' }}>Sign In!</Link>
-      <Link to={{ type: 'SIGN_UP' }}>Sign Up!</Link>
     </div>
   );
 }

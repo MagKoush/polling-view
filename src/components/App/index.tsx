@@ -1,3 +1,5 @@
+import './styles';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Link from 'redux-first-router-link';
@@ -11,7 +13,7 @@ interface Props {
 export function App({ page = 'Home' }: Props): React.ReactElement {
   const Component = components[page];
   return (
-    <div>
+    <div className="app">
       <Component />
       <Link to={{ type: 'HOME' }}>Home</Link>
     </div>
