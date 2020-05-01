@@ -12,8 +12,10 @@
   "globals": {
     "__dirname": true,
     "React": true,
+    "process": true,
     "document": true,
-    "console": true
+    "console": true,
+    "window": true
   },
   "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "sort-keys-fix"],
   "rules": {
