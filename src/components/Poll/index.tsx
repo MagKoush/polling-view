@@ -1,19 +1,19 @@
 import './styles';
 
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import Link from 'redux-first-router-link';
 
 interface Props {
+  _id: string;
   index: string;
   text: string;
   options: Array<string>;
+  formRegister: any;
 }
 
-export default function Poll({ index, text, options }: Props): React.ReactElement {
+export default function Poll({ _id, index, text, options, formRegister }: Props): React.ReactElement {
   const choices = options.map((option, index) => (
     <Fragment key={index}>
-      <input type="radio" name={text} id={option} value={option} />
+      <input type="radio" name={_id} id={option} value={option} ref={formRegister} />
       <label htmlFor={option}>{option}</label>
     </Fragment>
   ));

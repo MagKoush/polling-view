@@ -5,21 +5,20 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 
-import { setEmail } from '../../actions';
+import { getUserByEmail, goToPage } from '../../actions';
 
 interface Props {
   goToPage: Function;
-  setUserEmail: Function;
+  getUser: Function;
 }
 
-export function SignIn({ goToPage, setUserEmail }: Props): React.ReactElement {
+export function SignIn({ goToPage, getUser }: Props): React.ReactElement {
   const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
   });
-
   const onSubmit = ({ email }: any): void => {
     goToPage('ELECTION');
-    setUserEmail(email);
+    getUser(email);
   };
 
   const diaplayInputErrorMessage = (): string => {
@@ -59,10 +58,10 @@ export function SignIn({ goToPage, setUserEmail }: Props): React.ReactElement {
   );
 }
 
-const mapDispatch = (dispatch: Function): any => ({
-  goToPage: (type: string): any => dispatch({ type }),
-  setUserEmail: (email: string): any => dispatch(setEmail(email)),
-});
+const mapDispatch = {
+  getUser: getUserByEmail,
+  goToPage: goToPage,
+};
 
 const mapState = (props: any): any => props;
 

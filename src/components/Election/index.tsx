@@ -1,31 +1,40 @@
 import './styles';
 
 import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import Link from 'redux-first-router-link';
 
-import { fetchPolls } from '../../actions';
+import { getElectionByUser, goToPage, postVotes } from '../../actions';
 import Poll from '../Poll';
 
 interface Props {
-  fetchUserPolls: Function;
+  getUserElection: Function;
+  submitUserElection: Function;
   goToPage: Function;
   user: any;
+  election: any;
 }
 
 export function Election(props: Props): React.ReactElement {
+  const { register, handleSubmit } = useForm();
+  const userID = '5ea61c2d5cc527811592873a';
+
   useEffect(() => {
-    props.fetchUserPolls('arash.koush@gmail.com');
+    props.getUserElection(userID);
   }, []);
 
-  const polls = props.user.polls.map(({ text, options }: any, index: string) => (
-    <Poll index={index} key={index} options={options} text={text} />
+  const onSubmit = (polls: any): void => {
+    props.submitUserElection(userID, props.election._id, polls);
+  };
+
+  const polls = props.election.polls.map(({ _id, text, options }: any, index: string) => (
+    <Poll _id={_id} index={index} key={_id} options={options} text={text} formRegister={register} />
   ));
 
   return (
     <div className="election">
-      <h2>My Election</h2>
-      <form>
+      <h2>{props.election.title}</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {polls}
         <input type="submit" value="Send Form" />
         <input type="reset" value="Clear Form" />
@@ -34,10 +43,11 @@ export function Election(props: Props): React.ReactElement {
   );
 }
 
-const mapDispatch = (dispatch: Function): any => ({
-  fetchUserPolls: (email: string): any => dispatch(fetchPolls(email)),
-  goToPage: (type: string): any => dispatch({ type }),
-});
+const mapDispatch = {
+  getUserElection: getElectionByUser,
+  goToPage: goToPage,
+  submitUserElection: postVotes,
+};
 
 const mapState = (props: any): any => props;
 
