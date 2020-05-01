@@ -10,10 +10,31 @@ import configureStore from './configureStore';
 import { State } from './interfaces';
 
 const preloadedState: State = {
-  user: {
-    email: 'arash.koush@gmail.com',
-    polls: [],
+  election: {
+    polls: [
+      {
+        _id: '',
+        options: [],
+        text: '',
+      },
+    ],
+    title: '',
   },
+  page: {},
+  user: {
+    email: '',
+  },
+  votes: [
+    {
+      _id: '',
+      results: [
+        {
+          option: '',
+          vote: '',
+        },
+      ],
+    },
+  ],
 };
 
 const store = configureStore(preloadedState);
