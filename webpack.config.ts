@@ -1,13 +1,14 @@
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 import path from 'path';
 import * as webpack from 'webpack';
 
 export const config: webpack.Configuration = {
   devServer: {
-    historyApiFallback: true,
     compress: true,
     contentBase: path.join(__dirname, 'src'),
+    historyApiFallback: true,
     hot: true,
     open: true,
     port: 1234,
@@ -37,11 +38,15 @@ export const config: webpack.Configuration = {
       },
     ],
   },
+  node: {
+    fs: 'empty',
+  },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
+    new Dotenv({ defaults: true }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
