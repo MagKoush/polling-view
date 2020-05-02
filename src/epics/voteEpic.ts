@@ -18,8 +18,9 @@ export const postVotesEpic = (action$: any): any =>
     flatMap(({ userID, electionID, questions }: any) => {
       const polls: Array<any> = [];
 
-      for (const key of Object.keys(questions)) polls.push({ ID: key, result: questions[key] });
+      for (const key of Object.keys(questions)) polls.push({ ID: key, results: questions[key] });
 
+      console.log(polls);
       return ajax({
         body: {
           electionID,

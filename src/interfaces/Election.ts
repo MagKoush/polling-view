@@ -1,3 +1,8 @@
+export enum PollType {
+  MS = 'multipleSelection',
+  SS = 'singleSelection',
+}
+
 export interface Poll {
   _id: string;
   text: string;

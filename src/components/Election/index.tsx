@@ -27,8 +27,8 @@ export function Election(props: Props): React.ReactElement {
     props.submitUserElection(userID, props.election._id, polls);
   };
 
-  const polls = props.election.polls.map(({ _id, text, options }: any, index: string) => (
-    <Poll _id={_id} index={index} key={_id} options={options} text={text} formRegister={register} />
+  const polls = props.election.polls.map(({ _id, text, options, type }: any, index: string) => (
+    <Poll _id={_id} index={index} key={_id} options={options} text={text} formRegister={register} type={type} />
   ));
 
   return (
