@@ -1,41 +1,24 @@
 import './styles';
 
-import * as EmailValidator from 'email-validator';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 
-import { getUserByEmail, goToPage } from '../../actions';
+import { authenticateUser, goToPage } from '../../actions';
+import { User } from '../../interfaces';
 
 interface Props {
+  authenticateUser: Function;
   goToPage: Function;
-  getUser: Function;
+  user: User;
 }
 
-export function SignIn({ goToPage, getUser }: Props): React.ReactElement {
+export function SignIn({ authenticateUser }: Props): React.ReactElement {
   const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
   });
-  const onSubmit = ({ email }: any): void => {
-    goToPage('ELECTION');
-    getUser(email);
-  };
-
-  const diaplayInputErrorMessage = (): string => {
-    let errMsg = '';
-
-    if (errors.email) {
-      switch (errors.email.type) {
-        case 'required':
-          errMsg = 'Email is required';
-          break;
-        case 'valid':
-          errMsg = 'Email is not valid';
-          break;
-      }
-    }
-
-    return errMsg;
+  const onSubmit = ({ username, password }: any): void => {
+    authenticateUser(username, password);
   };
 
   return (
@@ -44,14 +27,22 @@ export function SignIn({ goToPage, getUser }: Props): React.ReactElement {
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
-          name="email"
-          placeholder="Email Address"
+          name="username"
+          placeholder="Username"
           ref={register({
             required: true,
-            validate: { valid: (value): any => EmailValidator.validate(value) },
           })}
         />
-        {diaplayInputErrorMessage()}
+        {errors.username && 'username is required'}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          ref={register({
+            required: true,
+          })}
+        />
+        {errors.password && 'password is required'}
         <input type="submit" value="Login" />
       </form>
     </div>
@@ -59,7 +50,7 @@ export function SignIn({ goToPage, getUser }: Props): React.ReactElement {
 }
 
 const mapDispatch = {
-  getUser: getUserByEmail,
+  authenticateUser: authenticateUser,
   goToPage: goToPage,
 };
 

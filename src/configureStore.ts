@@ -2,7 +2,13 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { connectRoutes } from 'redux-first-router';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
-import { getElectionByUserEpic, getUserEpic, getVotesByElectionEpic, postVotesEpic } from './epics';
+import {
+  authenticateUserEpic,
+  getElectionByUserEpic,
+  getUserEpic,
+  getVotesByElectionEpic,
+  postVotesEpic,
+} from './epics';
 import { State } from './interfaces';
 import { election, page, user, votes } from './reducers';
 import RoutesMap from './routesMap';
@@ -10,7 +16,14 @@ import RoutesMap from './routesMap';
 export default function configureStore(preloadedState: State): any {
   const { reducer, middleware, enhancer } = connectRoutes(RoutesMap);
 
-  const rootEpic = combineEpics(getElectionByUserEpic, getUserEpic, getVotesByElectionEpic, postVotesEpic);
+  const rootEpic = combineEpics(
+    authenticateUserEpic,
+    getElectionByUserEpic,
+    getUserEpic,
+    getVotesByElectionEpic,
+    postVotesEpic,
+  );
+
   const epicMiddleware = createEpicMiddleware();
   const rootReducer = combineReducers({ election, location: reducer, page, user, votes });
   const middlewares = applyMiddleware(epicMiddleware, middleware);

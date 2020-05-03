@@ -6,15 +6,19 @@ import { connect } from 'react-redux';
 import { getElectionByUser, getVotesByElection } from '../../actions';
 
 export function Results(props: any): React.ReactElement {
-  const userID = '5ea61c2d5cc527811592873a';
   const {
     election: { title, polls },
     votes,
   } = props;
 
   useEffect(() => {
-    if (props.election._id) props.getElectionVotes(props.election._id);
-    else props.getUserElection(userID);
+    // fetch election details if they are not stored
+    if (!props.election._id) {
+      props.getUserElection();
+    } else {
+      // fetch Votes if elections are stored already
+      props.getElectionVotes(props.election._id);
+    }
   }, [props.election._id]);
 
   const options = votes.map((vote: any) => {

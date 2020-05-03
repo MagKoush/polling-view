@@ -17,14 +17,13 @@ interface Props {
 
 export function Election(props: Props): React.ReactElement {
   const { register, handleSubmit } = useForm();
-  const userID = '5ea61c2d5cc527811592873a';
 
   useEffect(() => {
-    props.getUserElection(userID);
+    props.getUserElection();
   }, []);
 
   const onSubmit = (polls: any): void => {
-    props.submitUserElection(userID, props.election._id, polls);
+    props.submitUserElection(props.election._id, polls);
   };
 
   const polls = props.election.polls.map(({ _id, text, options, type }: any, index: string) => (
