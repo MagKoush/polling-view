@@ -4,22 +4,48 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { getElectionByUser, getVotesByElection } from '../../actions';
+import { Election, Vote } from '../../interfaces';
 
-export function Results(props: any): React.ReactElement {
-  const {
-    election: { title, polls },
-    votes,
-  } = props;
+/**
+ * @private
+ *
+ * @interface ResultPropertyTypes  Result component's property types
+ *
+ * @property {Election}    election          - Election's details
+ * @property {Array<Vote>} votes             - Election's votes
+ * @property {Function}    getUserElection   - Get user's Election's details
+ * @property {Function}    getElectionVotes  - Get Election's vote's details
+ */
+interface Props {
+  election: Election;
+  votes: Array<Vote>;
+  getUserElection: Function;
+  getElectionVotes: Function;
+}
 
+/**
+ * @public
+ *
+ * Results Component
+ *
+ * @param {Props} props  - component's property to render the component with
+ * @returns {React.ReactElement} an Results React component
+ */
+export function Results({
+  election: { _id, title, polls },
+  votes,
+  getUserElection,
+  getElectionVotes,
+}: Props): React.ReactElement {
   useEffect(() => {
     // fetch election details if they are not stored
-    if (!props.election._id) {
-      props.getUserElection();
+    if (!_id) {
+      getUserElection();
     } else {
       // fetch Votes if elections are stored already
-      props.getElectionVotes(props.election._id);
+      getElectionVotes(_id);
     }
-  }, [props.election._id]);
+  }, [_id]);
 
   const options = votes.map((vote: any) => {
     const [poll] = polls.filter((poll: any) => poll._id === vote._id);

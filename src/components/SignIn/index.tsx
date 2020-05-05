@@ -1,18 +1,30 @@
 import './styles';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 
 import { authenticateUser, goToPage } from '../../actions';
-import { User } from '../../interfaces';
 
+/**
+ * @private
+ *
+ * @interface SignInPropertyTypes  Result component's property types
+ *
+ * @property {Function}    authenticateUser  - Authenticate user with given username and password
+ */
 interface Props {
   authenticateUser: Function;
-  goToPage: Function;
-  user: User;
 }
 
+/**
+ * @public
+ *
+ * SignIn Component
+ *
+ * @param {Props} props  - component's property to render the component with
+ * @returns {React.ReactElement} an SignIn React component
+ */
 export function SignIn({ authenticateUser }: Props): React.ReactElement {
   const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
