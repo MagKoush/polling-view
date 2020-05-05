@@ -1,6 +1,6 @@
 import { Cookies } from 'react-cookie';
-import { ofType } from 'redux-observable';
-import { concat, of } from 'rxjs';
+import { ActionsObservable, ofType } from 'redux-observable';
+import { concat, Observable, of } from 'rxjs';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 import { flatMap, map } from 'rxjs/operators';
 
@@ -8,14 +8,30 @@ import { AUTHENTICATE_USER, AUTHENTICATE_USER_SUCCESS, GET_USER, GET_USER_SUCCES
 import { Request } from '../Ajax';
 import { SERVER_URL } from '../constants';
 
-export const getUserEpic = (action$: any): any =>
+/**
+ * @public
+ *
+ * Fetches the user's to render the components.
+ *
+ * @param {ActionsObservable<any>} action$  - Observable to operate the logic and data
+ * @returns {<Observable<any>} an observable to an object to dispatch to
+ */
+export const getUserEpic = (action$: ActionsObservable<any>): Observable<any> =>
   action$.pipe(
     ofType(GET_USER),
     flatMap(({ userID }: any) => ajax(new Request(`${SERVER_URL}/users/${userID}`))),
     map(({ response }: AjaxResponse) => ({ type: GET_USER_SUCCESS, votes: response })),
   );
 
-export const authenticateUserEpic = (action$: any): any =>
+/**
+ * @public
+ *
+ * Authenticate the user after a login process.
+ *
+ * @param {ActionsObservable<any>} action$  - Observable to operate the logic and data
+ * @returns {Observable<any>} an observable to an object to dispatch to
+ */
+export const authenticateUserEpic = (action$: ActionsObservable<any>): Observable<any> =>
   action$.pipe(
     ofType(AUTHENTICATE_USER),
     flatMap(({ username, password }: any) =>
