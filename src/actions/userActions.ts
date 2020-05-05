@@ -5,7 +5,7 @@ export const GET_USER = 'GET_USER';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
-export const AUTHENTICATE_USER_SUCCESS = 'AUTHENTICATE_USER_SUCESS';
+export const AUTHENTICATE_USER_SUCCESS = 'AUTHENTICATE_USER_SUCCESS';
 
 export const getUser = (userID: string): any => ({ type: GET_USER, userID });
 export const authenticateUser = (username: string, password: string): any => ({

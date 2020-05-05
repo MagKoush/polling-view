@@ -1,17 +1,20 @@
 import { GET_ELECTION_BY_USER_SUCCESS } from '../actions';
 
+/**
+ * Election reducer to render the components
+ *
+ * @param {any} state   - Previous state from a dispatch
+ * @param {any} action  - Action object to dispatch from an epic
+ * @returns {any} new state to render the components with
+ */
 export default (state = {}, action: any): any => {
-  let newState = {};
   switch (action.type) {
     case GET_ELECTION_BY_USER_SUCCESS:
-      newState = {
+      return {
         ...state,
         ...action.election,
       };
-      break;
     default:
-      newState = state;
+      return state;
   }
-
-  return newState;
 };

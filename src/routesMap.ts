@@ -6,7 +6,6 @@ export const Components = {
   [NOT_FOUND]: 'NotFound',
   RESULTS: 'Results',
   SIGN_IN: 'SignIn',
-  SIGN_UP: 'SignUp',
 };
 
 export default {
@@ -14,5 +13,4 @@ export default {
   HOME: '/',
   RESULTS: '/results',
   SIGN_IN: '/signin',
-  SIGN_UP: '/singup',
 };
