@@ -1,4 +1,4 @@
-import { AUTHENTICATE_USER_SUCCESS, GET_USER_SUCCESS } from '../actions';
+import { AUTHENTICATE_USER_SUCCESS, GET_USER_SUCCESS, LOG_OUT_USER_SUCCESS } from '../actions';
 
 /**
  * User reducer to render the components
@@ -13,10 +13,17 @@ export default (state = {}, action: any): any => {
       return {
         ...state,
         isAuthenticated: true,
+        isRunner: action.isRunner,
       };
     case GET_USER_SUCCESS:
       return {
         ...action.user,
+      };
+    case LOG_OUT_USER_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false,
+        isRunner: false,
       };
     default:
       return state;

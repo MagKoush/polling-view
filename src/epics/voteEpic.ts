@@ -40,5 +40,5 @@ export const postVotesEpic = (action$: ActionsObservable<any>): Observable<any> 
 
       return ajax(new Request(`${SERVER_URL}/votes`, { electionID, polls }, 'POST'));
     }),
-    mapTo({ type: 'RESULTS' }),
+    mapTo({ type: 'THANK_YOU' }),
   );

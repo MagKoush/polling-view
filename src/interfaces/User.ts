@@ -7,5 +7,6 @@
  */
 export default interface User {
   isAuthenticated: boolean;
+  isRunner: boolean;
   email: string;
 }
