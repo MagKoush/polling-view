@@ -18,10 +18,11 @@ export const INITIAL_STATE: State = {
     ],
     title: '',
   },
-  page: {},
+  page: '',
   user: {
     email: '',
     isAuthenticated: cookies.get('token') ? true : false,
+    isRunner: false,
   },
   votes: [
     {

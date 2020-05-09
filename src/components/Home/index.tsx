@@ -25,11 +25,14 @@ interface Props {
  * @param {Props} props  - component's property to render the component with
  * @returns {React.ReactElement} an Home React component
  */
-export function Home(props: Props): React.ReactElement {
+export function Home({ user: { isAuthenticated, isRunner } }: Props): React.ReactElement {
+  const whichPage = isRunner ? 'RESULTS' : 'ELECTION';
+  const type = isAuthenticated ? whichPage : 'SIGN_IN';
+
   return (
     <div className="home">
       <h1>Home</h1>
-      <Link to={{ type: props.user.isAuthenticated ? 'ELECTION' : 'SIGN_IN' }}>Sign In!</Link>
+      <Link to={{ type }}>Sign In!</Link>
     </div>
   );
 }

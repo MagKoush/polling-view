@@ -4,7 +4,7 @@ import Home from './Home';
 import NotFound from './NotFound';
 import Results from './Results';
 import SignIn from './SignIn';
-import SignUp from './SignUp';
+import ThankYou from './ThankYou';
 
 export default {
   App,
@@ -13,5 +13,5 @@ export default {
   NotFound,
   Results,
   SignIn,
-  SignUp,
+  ThankYou,
 };

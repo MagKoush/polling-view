@@ -3,7 +3,7 @@ import './styles';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getElectionByUser, getVotesByElection } from '../../actions';
+import { getElectionByUser, getVotesByElection, logOutUser } from '../../actions';
 import { Election, Vote } from '../../interfaces';
 
 /**
@@ -15,12 +15,14 @@ import { Election, Vote } from '../../interfaces';
  * @property {Array<Vote>} votes             - Election's votes
  * @property {Function}    getUserElection   - Get user's Election's details
  * @property {Function}    getElectionVotes  - Get Election's vote's details
+ * @property {Function}    logout            - Log User out
  */
 interface Props {
   election: Election;
   votes: Array<Vote>;
   getUserElection: Function;
   getElectionVotes: Function;
+  logout: () => {};
 }
 
 /**
@@ -36,6 +38,7 @@ export function Results({
   votes,
   getUserElection,
   getElectionVotes,
+  logout,
 }: Props): React.ReactElement {
   useEffect(() => {
     // fetch election details if they are not stored
@@ -50,6 +53,7 @@ export function Results({
   const options = votes.map((vote: any) => {
     const [poll] = polls.filter((poll: any) => poll._id === vote._id);
     if (!poll) return;
+
     const votes = vote.results.map(({ option, vote }: any) => {
       return (
         <div className="result" key={option}>
@@ -70,6 +74,7 @@ export function Results({
     <div>
       <h1>{title} Results</h1>
       {options}
+      <button onClick={logout}>Sign Out</button>
     </div>
   );
 }
@@ -77,6 +82,7 @@ export function Results({
 const mapDispatch = {
   getElectionVotes: getVotesByElection,
   getUserElection: getElectionByUser,
+  logout: logOutUser,
 };
 
 const mapStates = (props: any): any => props;
