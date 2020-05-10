@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
 
-import { getElectionByUserEpic } from './electionEpic';
+import { getElectionByUserEpic, getElectionParticipants } from './electionEpic';
 import { authenticateUserEpic, getUserEpic, logOutUserEpic } from './userEpic';
 import { getVotesByElectionEpic, postVotesEpic } from './voteEpic';
 
@@ -11,4 +11,5 @@ export default combineEpics(
   getUserEpic,
   getVotesByElectionEpic,
   postVotesEpic,
+  getElectionParticipants,
 );

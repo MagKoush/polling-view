@@ -1,4 +1,4 @@
-import { GET_ELECTION_BY_USER_SUCCESS } from '../actions';
+import { GET_ELECTION_BY_USER_SUCCESS, GET_ELECTION_PARTICIPANTS_SUCCESS } from '../actions';
 
 /**
  * Election reducer to render the components
@@ -13,6 +13,11 @@ export default (state = {}, action: any): any => {
       return {
         ...state,
         ...action.election,
+      };
+    case GET_ELECTION_PARTICIPANTS_SUCCESS:
+      return {
+        ...state,
+        participants: [...action.participants],
       };
     default:
       return state;

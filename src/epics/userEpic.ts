@@ -2,7 +2,7 @@ import { Cookies } from 'react-cookie';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { concat, Observable, of } from 'rxjs';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
-import { flatMap, map, mapTo } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/operators';
 
 import {
   AUTHENTICATE_USER,
