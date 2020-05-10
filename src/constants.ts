@@ -8,6 +8,7 @@ export const SERVER_URL = process.env.SERVER_URL;
 export const INITIAL_STATE: State = {
   election: {
     _id: '',
+    participants: [],
     polls: [
       {
         _id: '',

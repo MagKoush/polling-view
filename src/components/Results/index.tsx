@@ -3,8 +3,9 @@ import './styles';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getElectionByUser, getVotesByElection, logOutUser } from '../../actions';
+import { getElectionByUser, getElectionParticipants, getVotesByElection, logOutUser } from '../../actions';
 import { Election, Vote } from '../../interfaces';
+import { election } from '../../reducers';
 
 /**
  * @private
@@ -21,6 +22,7 @@ interface Props {
   election: Election;
   votes: Array<Vote>;
   getUserElection: Function;
+  getElectionParticipants: Function;
   getElectionVotes: Function;
   logout: () => {};
 }
@@ -34,9 +36,10 @@ interface Props {
  * @returns {React.ReactElement} an Results React component
  */
 export function Results({
-  election: { _id, title, polls },
+  election: { _id, title, polls, participants },
   votes,
   getUserElection,
+  getElectionParticipants,
   getElectionVotes,
   logout,
 }: Props): React.ReactElement {
@@ -45,10 +48,18 @@ export function Results({
     if (!_id) {
       getUserElection();
     } else {
-      // fetch Votes if elections are stored already
+      // fetch Votes and Election's participants if elections are stored already
       getElectionVotes(_id);
+      getElectionParticipants(_id);
     }
   }, [_id]);
+
+  const memberRows = participants.map(({ _id, email, hasVoted }: any) => (
+    <tr key={_id}>
+      <td>{email}</td>
+      <td>{hasVoted ? 'Yes' : 'No'}</td>
+    </tr>
+  ));
 
   const options = votes.map((vote: any) => {
     const [poll] = polls.filter((poll: any) => poll._id === vote._id);
@@ -74,12 +85,22 @@ export function Results({
     <div>
       <h1>{title} Results</h1>
       {options}
+      <table>
+        <thead>
+          <tr>
+            <th>{`Voter's Email`}</th>
+            <th>Voted</th>
+          </tr>
+        </thead>
+        <tbody>{memberRows}</tbody>
+      </table>
       <button onClick={logout}>Sign Out</button>
     </div>
   );
 }
 
 const mapDispatch = {
+  getElectionParticipants: getElectionParticipants,
   getElectionVotes: getVotesByElection,
   getUserElection: getElectionByUser,
   logout: logOutUser,
