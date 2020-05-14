@@ -1,3 +1,4 @@
+import Admin from './Admin';
 import App from './App';
 import Election from './Election';
 import Home from './Home';
@@ -7,6 +8,7 @@ import SignIn from './SignIn';
 import ThankYou from './ThankYou';
 
 export default {
+  Admin,
   App,
   Election,
   Home,

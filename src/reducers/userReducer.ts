@@ -13,7 +13,7 @@ export default (state = {}, action: any): any => {
       return {
         ...state,
         isAuthenticated: true,
-        isRunner: action.isRunner,
+        status: action.status,
       };
     case GET_USER_SUCCESS:
       return {
@@ -23,7 +23,7 @@ export default (state = {}, action: any): any => {
       return {
         ...state,
         isAuthenticated: false,
-        isRunner: false,
+        status: undefined,
       };
     default:
       return state;
