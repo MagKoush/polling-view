@@ -1,3 +1,9 @@
+export enum StatusType {
+  Admin = 'admin',
+  Runner = 'runner',
+  Voter = 'voter',
+}
+
 /**
  * @public
  * @interface User
@@ -7,6 +13,6 @@
  */
 export default interface User {
   isAuthenticated: boolean;
-  isRunner: boolean;
+  status: StatusType;
   email: string;
 }
