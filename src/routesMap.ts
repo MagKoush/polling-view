@@ -1,6 +1,7 @@
 import { NOT_FOUND } from 'redux-first-router';
 
 export const Components = {
+  ADMIN: 'Admin',
   ELECTION: 'Election',
   HOME: 'Home',
   [NOT_FOUND]: 'NotFound',
@@ -10,6 +11,7 @@ export const Components = {
 };
 
 export default {
+  ADMIN: '/admin',
   ELECTION: '/election',
   HOME: '/',
   RESULTS: '/results',
