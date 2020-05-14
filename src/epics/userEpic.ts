@@ -14,6 +14,9 @@ import {
 } from '../actions';
 import { Request } from '../Ajax';
 import { SERVER_URL } from '../constants';
+import { getView } from '../helpers';
+
+const cookies = new Cookies('user');
 
 /**
  * @public
@@ -45,16 +48,16 @@ export const authenticateUserEpic = (action$: ActionsObservable<any>): Observabl
       ajax(new Request(`${SERVER_URL}/auth/login`, { password, username }, 'POST')),
     ),
     flatMap(({ response: { token } }: AjaxResponse) => {
-      const cookies = new Cookies('token');
-
       cookies.set('token', token, { path: '/' });
 
       return ajax(new Request(`${SERVER_URL}/users/me`));
     }),
-    flatMap(({ response: { isRunner } }: AjaxResponse) => {
-      const type = isRunner ? 'RESULTS' : 'ELECTION';
+    flatMap(({ response: { status } }: AjaxResponse) => {
+      cookies.set('user', { status }, { path: '/' });
 
-      return concat(of({ isRunner, type: AUTHENTICATE_USER_SUCCESS }), of({ type }));
+      const type = getView(status);
+
+      return concat(of({ status, type: AUTHENTICATE_USER_SUCCESS }), of({ type }));
     }),
   );
 
@@ -70,9 +73,8 @@ export const logOutUserEpic = (action$: ActionsObservable<any>): Observable<any>
   action$.pipe(
     ofType(LOG_OUT_USER),
     flatMap(() => {
-      const cookies = new Cookies('token');
-
       cookies.remove('token', { path: '/' });
+      cookies.remove('user', { path: '/' });
 
       return concat(of({ type: LOG_OUT_USER_SUCCESS }), of({ type: 'HOME' }));
     }),

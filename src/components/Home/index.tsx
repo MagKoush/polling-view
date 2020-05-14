@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Link from 'redux-first-router-link';
 
+import { getView } from '../../helpers';
 import { User } from '../../interfaces';
 
 /**
@@ -25,8 +26,8 @@ interface Props {
  * @param {Props} props  - component's property to render the component with
  * @returns {React.ReactElement} an Home React component
  */
-export function Home({ user: { isAuthenticated, isRunner } }: Props): React.ReactElement {
-  const whichPage = isRunner ? 'RESULTS' : 'ELECTION';
+export function Home({ user: { isAuthenticated, status } }: Props): React.ReactElement {
+  const whichPage = getView(status);
   const type = isAuthenticated ? whichPage : 'SIGN_IN';
 
   return (

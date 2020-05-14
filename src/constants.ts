@@ -23,7 +23,7 @@ export const INITIAL_STATE: State = {
   user: {
     email: '',
     isAuthenticated: cookies.get('token') ? true : false,
-    isRunner: false,
+    status: cookies.get('user') ? cookies.get('user').status : undefined,
   },
   votes: [
     {
