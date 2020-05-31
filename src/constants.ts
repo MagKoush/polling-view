@@ -8,6 +8,7 @@ export const SERVER_URL = process.env.SERVER_URL;
 export const INITIAL_STATE: State = {
   election: {
     _id: '',
+    end: new Date(),
     participants: [],
     polls: [
       {
@@ -17,6 +18,7 @@ export const INITIAL_STATE: State = {
         type: PollType.MS,
       },
     ],
+    start: new Date(),
     title: '',
   },
   page: '',

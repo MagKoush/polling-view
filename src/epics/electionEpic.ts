@@ -1,9 +1,10 @@
 import { ActionsObservable, ofType } from 'redux-observable';
 import { forkJoin, Observable, of } from 'rxjs';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
-import { flatMap, map } from 'rxjs/operators';
+import { flatMap, map, mapTo } from 'rxjs/operators';
 
 import {
+  CREATE_ELECTION,
   GET_ELECTION_BY_USER,
   GET_ELECTION_BY_USER_SUCCESS,
   GET_ELECTION_PARTICIPANTS,
@@ -11,6 +12,7 @@ import {
 } from '../actions';
 import { Request } from '../Ajax';
 import { SERVER_URL } from '../constants';
+import { Election, Poll, PollType } from '../interfaces';
 
 /**
  * @public
@@ -78,4 +80,34 @@ export const getElectionParticipants = (action$: ActionsObservable<any>): Observ
 
       return of({ participants, type: GET_ELECTION_PARTICIPANTS_SUCCESS });
     }),
+  );
+
+/**
+ * @public
+ *
+ * Creates an election
+ *
+ * @param {ActionObservable} action$  - Observable to operate the logic and data
+ * @returns {<Observable<any>} an observable to an object to dispatch to
+ */
+export const createElection = (action$: ActionsObservable<any>): Observable<any> =>
+  action$.pipe(
+    ofType(CREATE_ELECTION),
+    flatMap(({ election: { title, start, end, polls } }: any) => {
+      const polls$ = polls.map(({ text, options }: any) => {
+        const polls = { options, text, type: PollType.SS } as Poll;
+
+        return ajax(new Request(`${SERVER_URL}/polls`, polls, 'POST'));
+      });
+
+      return forkJoin([...polls$, of({ end, start, title })]);
+    }),
+    flatMap((data: Array<any>): any => {
+      const { title, start, end } = data.pop();
+      const polls = data.map(({ response: { _id } }: any) => _id);
+      const election = { end, polls, start, title } as Election;
+
+      return ajax(new Request(`${SERVER_URL}/elections`, election, 'POST'));
+    }),
+    mapTo({ type: 'ADMIN' }),
   );
