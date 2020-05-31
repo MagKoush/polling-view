@@ -2,6 +2,7 @@ import './styles';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import Link from 'redux-first-router-link';
 
 import { logOutUser } from '../../actions';
 
@@ -28,6 +29,7 @@ export function Admin({ logout }: Props): React.ReactElement {
   return (
     <div className="admin">
       <h1>Admin</h1>
+      <Link to={{ type: 'CREATE_ELECTION_PAGE' }}>Create Election!</Link>
       <button onClick={logout}>Sign Out</button>
     </div>
   );
